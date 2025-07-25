@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Suggestions | Kitchen Pantry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    :root {
+      --primary-green: #4a7c59;
+      --dark-green: #3a5a40;
+      --light-green: #a3b18a;
+      --cream: #f8f4e9;
+      --wood: #d4a373;
+      --copper: #b87333;
+      --warning: #f8961e;
+      --danger: #e07a5f;
+      --text-dark: #3a3a3a;
+      --text-light: #6d6d6d;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-dark);
+  position: relative;
+
+  /* Set background image and gradient */
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  /* black transparent overlay */
+    url('https://t4.ftcdn.net/jpg/04/43/94/31/360_F_443943188_0YO3b8vHxQfOncdqmR5O2x1xZ4f44lA1.jpg');
+  
+  background-size:cover;        /* Make image cover full screen */
+  background-position: center;   /* Center the image */
+  background-repeat: no-repeat;  /* Prevent repeat */
+}
+
+
+    /* Header Styles */
+    .main-header {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(139, 195, 74, 0.2);
+    }
+
+    .nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark-green);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: var(--wood);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-green);
+      background: rgba(74, 124, 89, 0.1);
+    }
+
+    .nav-links a.active {
+      color: var(--primary-green);
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(163, 177, 138, 0.3);
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--dark-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+
+  .recipe-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 7rem;
+  padding: 1rem;
+}
+
+
+
+
+
+
+    /* Recipe Grid 
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 1rem;
+    }*/
+
+    /* Recipe Card */
+    .recipe-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(163, 177, 138, 0.3);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .recipe-header {
+      padding: 1.5rem 1.5rem 0.5rem;
+      position: relative;
+      background: linear-gradient(to right, #f8f9fa, #ffffff);
+      border-bottom: 1px dashed var(--light-green);
+    }
+
+    .recipe-title {
+      margin: 0;
+      color: var(--dark-green);
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .recipe-category {
+      display: inline-block;
+      background: var(--light-green);
+      color: var(--dark-green);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    .recipe-meta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .match-badge {
+      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: white;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .missing-ingredients {
+      background: #FFF3E0;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--warning);
+      font-weight: 600;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .recipe-image-container {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .recipe-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .recipe-card:hover .recipe-image {
+      transform: scale(1.05);
+    }
+
+    .kitchen-tools-overlay {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .tool-icon {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 8px;
+      border-radius: 50%;
+      color: var(--primary-green);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      font-size: 0.9rem;
+    }
+
+    .recipe-content {
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--primary-green);
+      cursor: pointer;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e9ecef;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    .section-title i {
+      margin-right: 0.5rem;
+    }
+
+    .toggle-ingredients, .toggle-steps {
+      transition: all 0.3s;
+    }
+
+    .toggle-ingredients:hover, .toggle-steps:hover {
+      color: var(--wood);
+    }
+
+    .ingredients-list, .steps-list {
+      padding-left: 0;
+      max-height: 500px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      margin: 0.5rem 0;
+    }
+
+    .ingredient-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e9ecef;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .ingredient-name {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .ingredient-quantity {
+      white-space: nowrap;
+      text-align: right;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .out-of-stock {
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .in-stock-icon {
+      color: var(--primary-green);
+      font-size: 0.9rem;
+    }
+
+    .buy-now-btn {
+      background: var(--primary-green);
+      color: white;
+      padding: 0.4rem 0.6rem;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .buy-now-btn:hover {
+      background: var(--dark-green);
+      transform: scale(1.1);
+    }
+
+    .step-item {
+      padding: 0.75rem 0 0.75rem 1.5rem;
+      position: relative;
+      transition: all 0.2s;
+      border-bottom: 1px solid #e9ecef;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    .step-item:hover {
+      transform: translateX(5px);
+      color: var(--dark-green);
+    }
+
+    .step-icon {
+      position: absolute;
+      left: 0;
+      color: var(--wood);
+      font-size: 0.9rem;
+    }
+
+    .recipe-footer {
+      padding: 1rem 1.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .cook-form {
+      flex: 1;
+    }
+
+    .cook-btn {
+      background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+      color: white;
+      border: none;
+      padding: 0.85rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 3px 6px rgba(74, 124, 89, 0.3);
+    }
+
+    .cook-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(74, 124, 89, 0.4);
+    }
+
+    .steam-animation {
+      display: flex;
+      gap: 3px;
+      margin-left: 0.5rem;
+    }
+
+    .steam-1, .steam-2, .steam-3 {
+      width: 4px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50px;
+      animation: steam 2s infinite ease-in-out;
+    }
+
+    .steam-2 {
+      animation-delay: 0.3s;
+    }
+
+    .steam-3 {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes steam {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      50% { transform: translateY(-5px) scale(1.1); opacity: 1; }
+      100% { transform: translateY(-10px) scale(0.9); opacity: 0; }
+    }
+
+    .cooking-time {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* No Recipes Style */
+    .no-recipes {
+      text-align: center;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 2rem auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(163, 177, 138, 0.3);
+    }
+
+    .empty-pantry {
+      font-size: 2.5rem;
+      color: var(--light-green);
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .empty-pantry i {
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    .empty-pantry i:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .empty-pantry i:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .no-recipes h3 {
+      color: var(--dark-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .no-recipes p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-pantry {
+      background: var(--primary-green);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s;
+      box-shadow: 0 3px 6px rgba(74, 124, 89, 0.3);
+    }
+
+    .btn-pantry:hover {
+      background: var(--dark-green);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(74, 124, 89, 0.4);
+    }
+
+    /* Footer */
+    .main-footer {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-top: 1px solid rgba(163, 177, 138, 0.3);
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--dark-green);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-green);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-links a {
+      color: var(--text-light);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--primary-green);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(163, 177, 138, 0.1);
+    }
+
+    /* Animations */
+    .animate__animated {
+      animation-duration: 0.5s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-header {
+        padding: 1rem;
+      }
+      
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        width: 100%;
+        justify-content: space-around;
+      }
+      
+    /*  .recipe-grid {
+        grid-template-columns: 1fr;
+      }*/
+      
+      .footer-top {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <i class="fas fa-utensils"></i>
+        Kitchen Pantry
+      </a>
+      <nav class="nav-links">
+        <a href="dashboard">Home</a>
+        <a href="my_recipes" class="active">Recipes</a>
+        <a href="add">Add item</a>
+        <a href="pantry">Pantry</a>
+       
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="page-header animate__animated animate__fadeIn">
+        <h2>🍳 Suggested Recipes Based on Your Pantry 🧂</h2>
+        <p>Discover delicious meals you can make with what you already have</p>
+      </div>
+      
+      {% if recipes %}
+      <div class="recipe-grid">
+        {% for recipe in recipes %}
+          <div class="recipe-card animate__animated animate__fadeInUp"  >
+
+            <div class="recipe-header">
+              <div class="recipe-title-container">
+                <h3 class="recipe-title">{{ recipe.recipe_name }}</h3>
+                <div class="recipe-category">
+                  <i class="fas fa-utensils"></i> {{ recipe.category }}
+                </div>
+              </div>
+              <div class="recipe-meta">
+                <span class="match-badge" style="--match-percent: {{ recipe.match_percent }}%">
+                  {{ recipe.match_percent }}% Match
+                </span>
+                <span class="missing-ingredients">
+                  <i class="fas fa-exclamation-circle"></i> Missing {{ recipe.missing_count }} items
+                </span>
+              </div>
+            </div>
+
+            {% if recipe.image_url %}
+            <div class="recipe-image-container">
+              <img src="{{ recipe.image_url }}" alt="{{ recipe.recipe_name }}" class="recipe-image"/>
+              <div class="kitchen-tools-overlay">
+                <i class="tool-icon fas fa-blender"></i>
+                <i class="tool-icon fas fa-mortar-pestle"></i>
+                <i class="tool-icon fas fa-utensil-spoon"></i>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="recipe-content">
+              <div class="ingredients-section">
+                <h4 class="section-title">
+                  <i class="fas fa-carrot"></i> Ingredients
+                  <span class="toggle-ingredients"><i class="fas fa-chevron-down"></i></span>
+                </h4>
+                <ul class="ingredients-list">
+                  {% for ing in recipe.ingredients %}
+                    <li class="ingredient-item">
+                      <span class="ingredient-name">
+                        <i class="fas fa-circle-notch ingredient-icon"></i> {{ ing.name }}
+                      </span>
+                      <span class="ingredient-quantity">
+                        {% set ing_name = ing.name.strip().lower() %}
+                        {% if ing_name not in user_ingredients %}
+                          <span class="out-of-stock">
+                            <i class="fas fa-times-circle"></i> Need to buy
+                          </span>
+                          <a href="https://www.bigbasket.com/ps/?q={{ ing.name | urlencode }}" target="_blank" class="buy-now-btn" title="Buy {{ ing.name }}">
+                            <i class="fas fa-cart-plus"></i>
+                          </a>
+                        {% else %}
+                          {{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}
+                          <i class="fas fa-check-circle in-stock-icon"></i>
+                        {% endif %}
+                      </span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <div class="steps-section">
+                  <h4 class="section-title">
+                    <i class="fas fa-list-ol"></i> Cooking Steps
+                    <span class="toggle-steps" onclick="toggleSteps(this)" style="cursor: pointer; color: #28a745;">
+                      <i class="fas fa-eye"></i> View Recipe
+                    </span>
+                  </h4>
+                  <ol class="steps-list" style="display: none;">
+                    {% for step in recipe.steps %}
+                      <li class="step-item">
+                        <i class="fas fa-leaf step-icon"></i> {{ step }}
+                      </li>
+                    {% endfor %}
+                  </ol>
+                </div>
+
+
+
+
+            <div class="recipe-footer">
+              <form method="POST" action="{{ url_for('cook_recipe') }}" class="cook-form">
+                <input type="hidden" name="recipe_id" value="{{ recipe._id }}">
+                <button type="submit" class="cook-btn">
+                  <i class="fas fa-fire"></i> Cook Now
+                  <span class="steam-animation">
+                    <span class="steam-1"></span>
+                    <span class="steam-2"></span>
+                    <span class="steam-3"></span>
+                  </span>
+                </button>
+              </form>
+              <div class="cooking-time">
+                <i class="fas fa-clock"></i> ~{{ recipe.cooking_time }} mins
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="no-recipes animate__animated animate__fadeIn">
+        <div class="empty-pantry">
+          <i class="fas fa-utensils"></i>
+          <i class="fas fa-box-open"></i>
+          <i class="fas fa-blender"></i>
+        </div>
+        <h3>No perfect matches found</h3>
+        <p>Try adding more ingredients to your pantry for better suggestions!</p>
+        <a href="/pantry" class="btn-pantry">
+          <i class="fas fa-plus-circle"></i> Add Ingredients
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <a href="/" class="footer-logo">
+          <i class="fas fa-utensils"></i> Pantry Pilot
+        </a>
+        <div class="footer-links">
+           <a href="dashboard" class="active">Home</a>
+                    <a href="add" id="addItemBtn">Add Item</a>
+                    <a href="my_recipes" id="viewRecipesBtn">View Recipes</a>
+                    <a href="pantry" id="statusBtn">Pantry</a>
+                    <a href="about" id="aboutBtn">About Us</a>
+        </div>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2025 Pantry Pilot. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle sections functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.toggle-ingredients, .toggle-steps').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+          const section = this.closest('.section-title').nextElementSibling;
+          const icon = this.querySelector('i');
+          
+          if (section.style.maxHeight) {
+            section.style.maxHeight = null;
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+          } else {
+            section.style.maxHeight = section.scrollHeight + 'px';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+          }
+        });
+      });
+
+
+ 
+  
+      
+  /*
+  function toggleSteps(element) {
+    const stepsList = element.closest('.steps-section').querySelector('.steps-list');
+    const icon = element.querySelector('i');
+
+    if (stepsList.style.display === 'none') {
+      stepsList.style.display = 'block';
+      element.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Recipe';
+    } else {
+      stepsList.style.display = 'none';
+      element.innerHTML = '<i class="fas fa-eye"></i> View Recipe';
+    }
+  }*/
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Only auto-expand ingredients for first card (optional)
+    const firstRecipe = document.querySelector('.recipe-card');
+    if (firstRecipe) {
+      const ingredientsList = firstRecipe.querySelector('.ingredients-list');
+      if (ingredientsList) {
+        ingredientsList.style.maxHeight = ingredientsList.scrollHeight + 'px';
+      }
+
+      const icon = firstRecipe.querySelector('.toggle-ingredients i');
+      if (icon) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    }
+  });
+
+
+
+      
+      // Auto-expand first recipe's sections
+      const firstRecipe = document.querySelector('.recipe-card');
+      if (firstRecipe) {
+        firstRecipe.querySelectorAll('.ingredients-list, .steps-list').forEach(section => {
+          section.style.maxHeight = section.scrollHeight + 'px';
+        });
+        firstRecipe.querySelectorAll('.toggle-ingredients i, .toggle-steps i').forEach(icon => {
+          icon.classList.remove('fa-chevron-down');
+          icon.classList.add('fa-chevron-up');
+        });
+      }
+    });
+
+    function toggleSteps(button) {
+  const card = button.closest('.recipe-card');
+  const stepsList = card.querySelector('.steps-list');
+
+  if (stepsList.style.display === 'none' || stepsList.style.display === '') {
+    stepsList.style.display = 'block';
+    button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Recipe';
+  } else {
+    stepsList.style.display = 'none';
+    button.innerHTML = '<i class="fas fa-eye"></i> View Recipe';
+  }
+}
+
+  </script>
+</body>
+</html>

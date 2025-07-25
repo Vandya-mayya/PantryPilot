@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PantryPilot</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            background-color: #f8f9fa;
+            background-image: url('https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(248, 249, 250, 0.9);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-card {
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .card-body {
+            padding: 3rem !important;
+            background-color: white;
+        }
+
+        .brand-title {
+            color: #4CAF50;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-weight: 500;
+        }
+
+        .input-group-text {
+            background-color: #f1f1f1;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+            padding: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #3d8b40;
+            border-color: #3d8b40;
+        }
+
+        /* Alert Styles */
+        .alert {
+            margin-top: 1rem;
+        }
+
+        /* Link Styles */
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card auth-card shadow-lg">
+                    <div class="card-body">
+                        <h1 class="brand-title">PantryPilot</h1>
+                        <h2 class="text-center mb-4">Login</h2>
+                        
+                        <!-- Flash Messages 
+                        {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                            <div class="alert alert-danger">
+                              <ul class="mb-0">
+                              {% for msg in messages %}
+                                <li>{{ msg }}</li>
+                              {% endfor %}
+                              </ul>
+                            </div>
+                          {% endif %}
+                        {% endwith %}-->
+                        
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+                            
+                            <div class="text-center">
+                                <p>New user? <a href="{{ url_for('register') }}">Register here</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            const togglePassword = document.querySelector('.toggle-password');
+            const password = document.getElementById('password');
+            
+            if (togglePassword && password) {
+                togglePassword.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    
+                    if (password.type === 'password') {
+                        password.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        password.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

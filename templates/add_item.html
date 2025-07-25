@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Pantry Item</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #27c968;
+      --secondary: #1cb960;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4bb543;
+      --warning: #f8961e;
+      --danger: #f94144;
+      --wood: #d4a373;
+      --cream: #fff9f0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--dark);
+      background-color: var(--black);
+      background-image: 
+        url('https://cdn.mos.cms.futurecdn.net/RQAdjXmBd276NKZzT4SuXn.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-blend-mode: overlay;
+    }
+
+    /* Header Styles */
+    .main-header {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(139, 195, 74, 0.2);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: var(--wood);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      background: rgba(39, 201, 104, 0.1);
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .intro-content {
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      padding: 2rem;
+      background: rgba(0,0,0,0.4);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: fadeInLeft 0.8s ease-out;
+    }
+    
+    .intro-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    
+    .intro-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    
+    .benefits-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    
+    .benefits-list li {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .benefits-list i {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .header h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .header p {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    .form-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.2);
+      animation: fadeInRight 0.8s ease-out;
+    }
+    
+    .form-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      background-color: #f8f9fa;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+    }
+    
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+    
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .category-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .category-tag {
+      padding: 0.25rem 0.75rem;
+      background-color: #e9ecef;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .category-tag:hover {
+      background-color: var(--accent);
+      color: white;
+    }
+    
+    .category-tag.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Footer */
+    .main-footer {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-top: 1px solid rgba(139, 195, 74, 0.2);
+      margin-top: auto;
+    }
+    
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .footer-links a {
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .social-links a {
+      color: var(--dark);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      color: var(--dark);
+      font-size: 0.85rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(139, 195, 74, 0.1);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .intro-content {
+        text-align: center;
+      }
+      
+      .benefits-list li {
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .main-header {
+        padding: 1rem;
+      }
+      
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        width: 100%;
+        justify-content: space-around;
+      }
+      
+      .footer-top {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .form-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <i class="fas fa-utensils"></i>
+       Pantry Pilot
+      </a>
+      <nav class="nav-links">
+        <a href="/">Add item</a>
+        <a href="dashboard">Home</a>
+        <a href="my_recipes">Receipe</a>
+        <a href="pantry">Pantry</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="intro-content">
+        <h1>Organize Your Kitchen</h1>
+        <p>Keep track of your pantry items, reduce food waste, and always know what ingredients you have available for your next meal.</p>
+        
+        <ul class="benefits-list">
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Never run out of essential ingredients</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Reduce food waste by tracking expiry dates</span>
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            <span>Get personalized recipe suggestions</span>
+          </li>
+         
+        </ul>
+      </div>
+      
+      <div class="form-wrapper">
+        <div class="form-card">
+          <div class="header">
+            <h2>{{ 'Update' if item else 'Add' }} Pantry Item</h2>
+            <p>Keep your kitchen organized and fresh</p>
+          </div>
+          
+          <form method="POST" action="{{ url_for('update_item', item_id=item._id) if item else url_for('add_item') }}">
+            <div class="form-group">
+              <label for="name">Item Name</label>
+              <input type="text" class="form-control" name="name" id="name"
+                    placeholder="e.g. Milk, Rice, Apples"
+                    value="{{ item.name if item else '' }}" required>
+            </div>
+
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <div style="display: flex; align-items: center;">
+                <input type="number" class="form-control" name="quantity" id="quantity"
+                      placeholder="e.g. 1.5" required style="flex: 2; margin-right: 10px;"
+                      value="{{ item.quantity if item else '' }}">
+
+                <select name="unit" id="unit" class="form-control" required style="flex: 1;">
+                  <option value="">Unit</option>
+                  <option value="kg" {{ 'selected' if item and item.unit == 'kg' else '' }}>kg</option>
+                  <option value="grams" {{ 'selected' if item and item.unit == 'grams' else '' }}>grams</option>
+                  <option value="pieces" {{ 'selected' if item and item.unit == 'pieces' else '' }}>pieces</option>
+                  <option value="liters" {{ 'selected' if item and item.unit == 'liters' else '' }}>liters</option>
+                  <option value="ml" {{ 'selected' if item and item.unit == 'ml' else '' }}>ml</option>
+                  <option value="packets" {{ 'selected' if item and item.unit == 'packets' else '' }}>packets</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select class="form-control" name="category" id="category" onchange="suggestExpiry()" required>
+                <option value="">-- Select Category --</option>
+                <option value="Dairy" {{ 'selected' if item and item.category == 'Dairy' else '' }}>Dairy</option>
+                <option value="Vegetables" {{ 'selected' if item and item.category == 'Vegetables' else '' }}>Vegetables</option>
+                <option value="Fruits" {{ 'selected' if item and item.category == 'Fruits' else '' }}>Fruits</option>
+                <option value="Grains" {{ 'selected' if item and item.category == 'Grains' else '' }}>Grains</option>
+                <option value="Spices" {{ 'selected' if item and item.category == 'Spices' else '' }}>Spices</option>
+                <option value="Beverages" {{ 'selected' if item and item.category == 'Beverages' else '' }}>Beverages</option>
+                <option value="Snacks" {{ 'selected' if item and item.category == 'Snacks' else '' }}>Snacks</option>
+              </select>
+
+              <div class="category-tags">
+                <div class="category-tag" onclick="selectCategory('Dairy')">Dairy</div>
+                <div class="category-tag" onclick="selectCategory('Vegetables')">Veggies</div>
+                <div class="category-tag" onclick="selectCategory('Fruits')">Fruits</div>
+                <div class="category-tag" onclick="selectCategory('Grains')">Grains</div>
+                <div class="category-tag" onclick="selectCategory('Spices')">Spices</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="expiry">Expiry Date</label>
+              <input type="date" class="form-control" name="expiry" id="expiry"
+                    value="{{ item.expiry_date if item else '' }}"
+                    required min="{{ today }}">
+            </div>
+
+            <button type="submit" class="btn">{{ 'Update' if item else 'Add to Pantry' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <a href="/" class="footer-logo">
+          <i class="fas fa-utensils"></i> Pantry Pilot
+        </a>
+        <div class="footer-links">
+           <a href="dashboard" class="active">Home</a>
+                    <a href="add" id="addItemBtn">Add Item</a>
+                    <a href="my_recipes" id="viewRecipesBtn">View Recipes</a>
+                    <a href="pantry" id="statusBtn">Pantry</a>
+                    <a href="about" id="aboutBtn">About Us</a>
+        </div>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2025 Pantry Pilot. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function suggestExpiry() {
+      const category = document.getElementById('category').value;
+      const expiry = new Date();
+
+      if (category === "Dairy") expiry.setDate(expiry.getDate() + 7);
+      else if (category === "Vegetables") expiry.setDate(expiry.getDate() + 5);
+      else if (category === "Fruits") expiry.setDate(expiry.getDate() + 5);
+      else if (category === "Grains") expiry.setDate(expiry.getDate() + 90);
+      else if (category === "Spices") expiry.setDate(expiry.getDate() + 180);
+      else expiry.setDate(expiry.getDate() + 30);
+
+      document.getElementById('expiry').value = expiry.toISOString().split('T')[0];
+    }
+
+    function selectCategory(category) {
+      document.getElementById('category').value = category;
+      suggestExpiry();
+      
+      // Update active tag
+      document.querySelectorAll('.category-tag').forEach(tag => {
+        tag.classList.remove('active');
+        if (tag.textContent === category || 
+            (category === 'Vegetables' && tag.textContent === 'Veggies')) {
+          tag.classList.add('active');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
