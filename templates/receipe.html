@@ -28,23 +28,22 @@
     }
     
     body {
-  font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: var(--text-dark);
-  position: relative;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--text-dark);
+      position: relative;
 
-  /* Set background image and gradient */
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  /* black transparent overlay */
-    url('https://t4.ftcdn.net/jpg/04/43/94/31/360_F_443943188_0YO3b8vHxQfOncdqmR5O2x1xZ4f44lA1.jpg');
-  
-  background-size:cover;        /* Make image cover full screen */
-  background-position: center;   /* Center the image */
-  background-repeat: no-repeat;  /* Prevent repeat */
-}
-
+      /* Set background image and gradient */
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  /* black transparent overlay */
+        url('https://t4.ftcdn.net/jpg/04/43/94/31/360_F_443943188_0YO3b8vHxQfOncdqmR5O2x1xZ4f44lA1.jpg');
+      
+      background-size:cover;        /* Make image cover full screen */
+      background-position: center;   /* Center the image */
+      background-repeat: no-repeat;  /* Prevent repeat */
+    }
 
     /* Header Styles */
     .main-header {
@@ -60,13 +59,12 @@
     }
 
     .nav-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     .logo {
       font-family: 'Playfair Display', serif;
@@ -141,26 +139,13 @@
       font-size: 1.1rem;
     }
 
-
-  .recipe-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 7rem;
-  padding: 1rem;
-}
-
-
-
-
-
-
-    /* Recipe Grid 
+    /* FIXED Recipe Grid - Changed from 7rem to 2rem gap */
     .recipe-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 2rem;
       padding: 1rem;
-    }*/
+    }
 
     /* Recipe Card */
     .recipe-card {
@@ -613,9 +598,9 @@
         justify-content: space-around;
       }
       
-    /*  .recipe-grid {
+      .recipe-grid {
         grid-template-columns: 1fr;
-      }*/
+      }
       
       .footer-top {
         flex-direction: column;
@@ -658,7 +643,7 @@
       {% if recipes %}
       <div class="recipe-grid">
         {% for recipe in recipes %}
-          <div class="recipe-card animate__animated animate__fadeInUp"  >
+          <div class="recipe-card animate__animated animate__fadeInUp">
 
             <div class="recipe-header">
               <div class="recipe-title-container">
@@ -735,8 +720,7 @@
                   </ol>
                 </div>
 
-
-
+            </div>
 
             <div class="recipe-footer">
               <form method="POST" action="{{ url_for('cook_recipe') }}" class="cook-form">
@@ -771,7 +755,6 @@
         </a>
       </div>
       {% endif %}
-    </div>
     </div>
   </main>
 
@@ -822,44 +805,6 @@
         });
       });
 
-
- 
-  
-      
-  /*
-  function toggleSteps(element) {
-    const stepsList = element.closest('.steps-section').querySelector('.steps-list');
-    const icon = element.querySelector('i');
-
-    if (stepsList.style.display === 'none') {
-      stepsList.style.display = 'block';
-      element.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Recipe';
-    } else {
-      stepsList.style.display = 'none';
-      element.innerHTML = '<i class="fas fa-eye"></i> View Recipe';
-    }
-  }*/
-
-  document.addEventListener('DOMContentLoaded', function () {
-    // Only auto-expand ingredients for first card (optional)
-    const firstRecipe = document.querySelector('.recipe-card');
-    if (firstRecipe) {
-      const ingredientsList = firstRecipe.querySelector('.ingredients-list');
-      if (ingredientsList) {
-        ingredientsList.style.maxHeight = ingredientsList.scrollHeight + 'px';
-      }
-
-      const icon = firstRecipe.querySelector('.toggle-ingredients i');
-      if (icon) {
-        icon.classList.remove('fa-chevron-down');
-        icon.classList.add('fa-chevron-up');
-      }
-    }
-  });
-
-
-
-      
       // Auto-expand first recipe's sections
       const firstRecipe = document.querySelector('.recipe-card');
       if (firstRecipe) {
@@ -874,18 +819,17 @@
     });
 
     function toggleSteps(button) {
-  const card = button.closest('.recipe-card');
-  const stepsList = card.querySelector('.steps-list');
+      const card = button.closest('.recipe-card');
+      const stepsList = card.querySelector('.steps-list');
 
-  if (stepsList.style.display === 'none' || stepsList.style.display === '') {
-    stepsList.style.display = 'block';
-    button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Recipe';
-  } else {
-    stepsList.style.display = 'none';
-    button.innerHTML = '<i class="fas fa-eye"></i> View Recipe';
-  }
-}
-
+      if (stepsList.style.display === 'none' || stepsList.style.display === '') {
+        stepsList.style.display = 'block';
+        button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Recipe';
+      } else {
+        stepsList.style.display = 'none';
+        button.innerHTML = '<i class="fas fa-eye"></i> View Recipe';
+      }
+    }
   </script>
 </body>
 </html>

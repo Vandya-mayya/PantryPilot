@@ -287,6 +287,11 @@ ingredient_unit_conversions = {
     'mustard seeds': {'tsp': ('g', 2.5), 'tbsp': ('g', 7.5)},
     # add more ingredients as needed
 }
+ingredient_density = {
+    'butter': 0.911,         # grams per ml
+    'garam masala': 0.56,    # grams per ml (powdered spice)
+    # Add more as needed
+}
 
 
 # Approximate grams per tsp for dry ingredients
@@ -424,6 +429,19 @@ def cook_recipe():
                     elif pantry_base_unit == 'g' and recipe_base_unit == 'kg':
                         recipe_val *= 1000
                         recipe_base_unit = 'g'
+                    
+                    # Volume (ml, tbsp, tsp) to weight (g) using density map
+                    elif pantry_base_unit == 'g' and recipe_base_unit in ['ml', 'tbsp', 'tsp']:
+                            # Look up density (grams per ml) for ingredient
+                            density = ingredient_density.get(ing_name.lower())
+                            if density:
+                                # Convert recipe_val (ml) to grams using density
+                                recipe_val *= density
+                                recipe_base_unit = 'g'
+                            else:
+                                print(f"⚠️ Missing density for '{ing_name}', cannot convert {recipe_base_unit} to grams")
+                                continue
+
 
                     else:
                         print(f"⚠️ Unit mismatch not resolved for '{ing_name}'")
